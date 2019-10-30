@@ -1,8 +1,10 @@
-exports.seed = function(knex, Promise) {
-  return knex('messages').insert([
+import Knex from 'knex';
+
+export const seed = (knex: Knex, _: Promise<any>) =>
+  knex('messages').insert([
     {
       sender: 'Frodo',
-      text: 'Go back Sam, I am goin gto Mordor alone',
+      text: 'Go back Sam, I am going to Mordor alone',
       hub_id: 1,
     },
     {
@@ -27,14 +29,12 @@ exports.seed = function(knex, Promise) {
     },
     {
       sender: 'Sam',
-      text:
-        "There is some good in this world, Mr. Frodo... and it's worth figting for",
+      text: "There is some good in this world, Mr. Frodo... and it's worth figting for",
       hub_id: 2,
     },
     {
       sender: 'Aragorn',
-      text:
-        'A hunted man sometimes wearies of distrust and longs for friendship',
+      text: 'A hunted man sometimes wearies of distrust and longs for friendship',
       hub_id: 2,
     },
     {
@@ -51,20 +51,17 @@ exports.seed = function(knex, Promise) {
     },
     {
       sender: 'Gandalf',
-      text:
-        'He that breaks a thing to find out what it is, has left the path of wisdom',
+      text: 'He that breaks a thing to find out what it is, has left the path of wisdom',
       hub_id: 2,
     },
     {
       sender: 'Gandalf',
-      text:
-        'All we have to decide is what to do with the time that is given us',
+      text: 'All we have to decide is what to do with the time that is given us',
       hub_id: 2,
     },
     {
       sender: 'Gandalf',
-      text:
-        'The burned hand teaches best. After that advice about fire goes to the heart',
+      text: 'The burned hand teaches best. After that advice about fire goes to the heart',
       hub_id: 2,
     },
     { sender: 'Gimli', text: 'Never toss a dwarf!', hub_id: 2 },
@@ -75,8 +72,7 @@ exports.seed = function(knex, Promise) {
     },
     {
       sender: 'Arwen',
-      text:
-        'Your time will come. You will face the same Evil, and you will defeat it',
+      text: 'Your time will come. You will face the same Evil, and you will defeat it',
       hub_id: 3,
     },
     {
@@ -102,8 +98,7 @@ exports.seed = function(knex, Promise) {
     },
     {
       sender: 'Aragorn',
-      text:
-        'It is but a shadow and a thought that you love. I cannot give you what you seek',
+      text: 'It is but a shadow and a thought that you love. I cannot give you what you seek',
       hub_id: 3,
     },
     {
@@ -118,4 +113,3 @@ exports.seed = function(knex, Promise) {
       hub_id: 3,
     },
   ]);
-};

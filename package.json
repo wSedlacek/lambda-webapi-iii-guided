@@ -2,26 +2,25 @@
   "name": "webapi-iii-guided",
   "version": "1.0.0",
   "description": "Guided Project for Web API-III Module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "server": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LambdaSchool/webapi-iii-guided-solution.git"
-  },
-  "keywords": [],
-  "author": "Lambda School",
-  "bugs": {
-    "url": "https://github.com/LambdaSchool/webapi-iii-guided-solution/issues"
-  },
-  "homepage": "https://github.com/LambdaSchool/webapi-iii-guided-solution#readme",
-  "devDependencies": {
-    "nodemon": "^1.19.4"
+    "start": "ts-node-dev src/index.ts"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "knex": "^0.20.1",
+    "helmet": "^3.21.2",
+    "knex": "^0.20.0",
     "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.1",
+    "@types/helmet": "^0.0.45",
+    "@types/node": "^12.11.7",
+    "@types/sqlite3": "^3.1.5",
+    "ts-node": "^8.4.1",
+    "ts-node-dev": "^1.0.0-pre.43",
+    "typescript": "^3.6.4"
   }
 }

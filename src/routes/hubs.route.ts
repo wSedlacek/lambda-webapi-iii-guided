@@ -1,126 +1,109 @@
-const express = require('express');
+import { Router } from 'express';
 
-const Hubs = require('./hubs-model.js');
-const Messages = require('../messages/messages-model.js');
+import { find, findByID, add, remove, update, findHubMessages } from '../data/hubs';
+import { add as addMessage } from '../data/messages';
+import { MessageDTO } from '../models';
 
-const router = express.Router();
+const hubsRouter = Router();
 
-// this only runs if the url has /api/hubs in it
-router.get('/', (req, res) => {
-  Hubs.find(req.query)
-  .then(hubs => {
+hubsRouter.get('/', async (req, res) => {
+  try {
+    const hubs = await find(req.query);
     res.status(200).json(hubs);
-  })
-  .catch(error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error retrieving the hubs',
     });
-  });
+  }
 });
 
-// /api/hubs/:id
-
-router.get('/:id', (req, res) => {
-  Hubs.findById(req.params.id)
-  .then(hub => {
+hubsRouter.get('/:id', async (req, res) => {
+  try {
+    const hub = await findByID(req.params.id);
     if (hub) {
       res.status(200).json(hub);
     } else {
       res.status(404).json({ message: 'Hub not found' });
     }
-  })
-  .catch(error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error retrieving the hub',
     });
-  });
+  }
 });
 
-router.post('/', (req, res) => {
-  Hubs.add(req.body)
-  .then(hub => {
+hubsRouter.post('/', async (req, res) => {
+  try {
+    const hub = await add(req.body);
     res.status(201).json(hub);
-  })
-  .catch(error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error adding the hub',
     });
-  });
+  }
 });
 
-router.delete('/:id', (req, res) => {
-  Hubs.remove(req.params.id)
-  .then(count => {
-    if (count > 0) {
+hubsRouter.delete('/:id', async (req, res) => {
+  try {
+    const hub = await remove(req.params.id);
+    if (hub) {
       res.status(200).json({ message: 'The hub has been nuked' });
     } else {
       res.status(404).json({ message: 'The hub could not be found' });
     }
-  })
-  .catch(error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error removing the hub',
     });
-  });
+  }
 });
 
-router.put('/:id', (req, res) => {
-  Hubs.update(req.params.id, req.body)
-  .then(hub => {
+hubsRouter.put('/:id', async (req, res) => {
+  try {
+    const hub = await update(req.params.id, req.body);
     if (hub) {
       res.status(200).json(hub);
     } else {
       res.status(404).json({ message: 'The hub could not be found' });
     }
-  })
-  .catch(error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error updating the hub',
     });
-  });
+  }
 });
 
 // add an endpoint that returns all the messages for a hub
 // this is a sub-route or sub-resource
-router.get('/:id/messages', (req, res) => {
-  Hubs.findHubMessages(req.params.id)
-  .then(messages => {
+hubsRouter.get('/:id/messages', async (req, res) => {
+  try {
+    const messages = await findHubMessages(req.params.id);
     res.status(200).json(messages);
-  })
-  .catch (error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error getting the messages for the hub',
     });
-  });
+  }
 });
 
 // add an endpoint for adding new message to a hub
-router.post('/:id/messages', (req, res) => {
-  const messageInfo = { ...req.body, hub_id: req.params.id };
-
-  Messages.add(messageInfo)
-  .then(message => {
+hubsRouter.post('/:id/messages', async (req, res) => {
+  try {
+    const messageInfo: MessageDTO = { ...req.body, hub_id: req.params.id };
+    const message = await addMessage(messageInfo);
     res.status(210).json(message);
-  })
-  .catch(error => {
-    // log error to server
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       message: 'Error getting the messages for the hub',
     });
-  });
+  }
 });
 
-module.exports = router;
+export { hubsRouter };

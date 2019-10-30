@@ -1,13 +1,15 @@
-exports.up = function(knex) {
+import Knex from 'knex';
+
+export const up = (knex: Knex) => {
   return knex.schema
-    .createTable('hubs', tbl => {
+    .createTable('hubs', (tbl) => {
       tbl.increments();
       tbl.string('name').notNullable();
       tbl.timestamps(true, true);
 
       tbl.unique('name');
     })
-    .createTable('messages', tbl => {
+    .createTable('messages', (tbl) => {
       tbl.increments();
       tbl
         .string('sender')
@@ -27,6 +29,4 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('messages').dropTableIfExists('hubs');
-};
+export const down = (knex) => knex.schema.dropTableIfExists('messages').dropTableIfExists('hubs');
