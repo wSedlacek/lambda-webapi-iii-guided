@@ -5,7 +5,10 @@ import { Middleware } from './models';
 import { hubsRouter } from './routes/hubs.route';
 
 export const server = express();
-export const logger: Middleware = () => (req, res, next) => {};
+export const logger: Middleware = () => (req, res, next) => {
+  console.log(`\n${new Date().toISOString()} ${req.method} ${req.url}\n`);
+  next();
+};
 
 server.use(express.json());
 server.use(helmet());
